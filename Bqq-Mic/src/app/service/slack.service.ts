@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
 import {SlackData} from "./slack.data";
+import {ReplaySubject} from "rxjs/ReplaySubject";
 
 @Injectable()
 export class SlackService {
@@ -11,15 +12,11 @@ export class SlackService {
   private _slackCode: string = null;
   private slackData: SlackData = null;
 
+  private useridSubject = new ReplaySubject<string>(1);
+  useridSubject$ = this.useridSubject.asObservable();
+
   constructor(private http: HttpClient) {
     this.slackData = new SlackData();
-  }
-
-  getSlackId(): Observable<string> {
-    return Observable.create(obs => {
-      obs.next("");
-      obs.complete();
-    });
   }
 
   init(code: string): Observable<string> {
@@ -33,9 +30,10 @@ export class SlackService {
           this._token = data.access_token;
           this._username = data.user.name;
           this._userid = data.user.id;
+          this.useridSubject.next(this._userid);
           obs.next(this._username);
         } else {
-          obs.error("Data is not ok");
+          obs.error(data.error);
         }
         obs.complete();
       }, err => console.log(err));
@@ -50,18 +48,4 @@ export class SlackService {
     return this.slackData.clientId;
   }
 
-  get username(): Observable<string> {
-    return Observable.create(obs => {
-      /*while(isNullOrUndefined(this._username)) {
-
-      }*/
-
-      obs.next(null);
-      obs.complete();
-    });
-  }
-
-  get userid(): string {
-    return this._userid;
-  }
 }

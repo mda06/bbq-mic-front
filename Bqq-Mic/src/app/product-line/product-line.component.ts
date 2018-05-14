@@ -16,7 +16,7 @@ export class ProductLineComponent implements OnInit {
   @Input() product: Product;
   totalQuantity: number = 0;
   currentQuantity: number = 0;
-  canAddSupply: boolean = true;
+  canAddSupply: boolean = false;
   isSupplied: boolean = false;
   supply: Supply = null;
   slackId: string = "";
@@ -25,10 +25,11 @@ export class ProductLineComponent implements OnInit {
               private slackService: SlackService) { }
 
   ngOnInit() {
-    this.slackService.getSlackId().subscribe(id => {
+    this.slackService.useridSubject$.subscribe(id => {
       this.slackId = id;
+      console.log(id);
       this.canAddSupply = !isNullOrUndefined(id);
-    });
+    }, err => console.log(err));
     this.withQuantity = this.product.quantity !== 0;
     this.currentQuantity = Math.floor(this.product.quantity / 2);
     this.initCurrentQuantity();

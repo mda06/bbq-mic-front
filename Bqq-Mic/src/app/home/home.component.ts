@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
       if(!isNullOrUndefined(code)) {
         this.slackService.init(code).subscribe(data => {
           this.username = data;
-        });
+        }, err => console.log(err));
       }
     });
 
