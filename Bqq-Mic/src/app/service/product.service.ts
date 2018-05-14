@@ -13,8 +13,16 @@ export class ProductService {
   private deleteSupplyUrl = "/api/supply/delete";
   private addSupplyUrl = "/api/supply/add";
   private updateSupplyUrl = "/api/supply/update";
+  private getSuppliesUrl = "/api/supply";
 
-  constructor(private http: HttpClient) { }
+  private mySupplies: Array<Supply> = [
+    new Supply(1, "U8VD1SZ89", 20, new Product(8)),
+    new Supply(2, "U8VD1SZ89", 2, new Product(1)),
+    new Supply(3, "U8VD1SZ89", 3, new Product(5))
+  ];
+
+  constructor(private http: HttpClient) {
+  }
 
   getProducts(): Observable<Array<Product>> {
     //return this.http.get<Array<Product>>(this.baseUrl + this.getProducts());
@@ -27,7 +35,7 @@ export class ProductService {
         new Product(5, "BBQ", "Outils", 2, "nb"),
         new Product(6, "Mayo", "Sauces", 1, "nb"),
         new Product(7, "Ketchup", "Sauces", 1, "nb"),
-        new Product(8, "Chips", "Snacks", 5, "nb"),
+        new Product(8, "Chips", "Snacks", 50, "nb"),
         new Product(9, "Salade", "Légumes", 3, "nb"),
       ];
       obs.next(arr);
@@ -41,6 +49,23 @@ export class ProductService {
       obs.next(Math.floor(Math.random() * product.quantity));
       obs.complete();
     });
+  }
+
+  initMySupplies(): Observable<boolean> {
+    return Observable.create(obs => {
+      /*this.http.get<Array<Supply>>(this.baseUrl + this.getSuppliesUrl).subscribe(data => {
+        this.mySupplies = data;
+        obs.next(true);
+        obs.complete();
+      }, err => console.log(err));*/
+
+      obs.next(true);
+      obs.complete();
+    });
+  }
+
+  getSupply(slackId: string, productId: number): Supply {
+    return this.mySupplies.find(supply => supply.slackId === slackId && supply.product.id === productId);
   }
 
   addSupply(slackId: string, productId: number, quantity: number): Observable<Supply> {

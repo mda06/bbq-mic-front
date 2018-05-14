@@ -8,8 +8,8 @@ export class Supply {
     this.product = product;
   }
 
-  id: number = 0;
-  slackId: string = "";
-  product: Product = null;
-  quantity: number = 0;
+  id: number;
+  slackId: string;
+  product: Product;
+  quantity: number;
 }

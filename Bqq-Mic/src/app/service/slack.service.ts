@@ -3,6 +3,7 @@ import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
 import {SlackData} from "./slack.data";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {ProductService} from "./product.service";
 
 @Injectable()
 export class SlackService {
@@ -15,7 +16,7 @@ export class SlackService {
   private useridSubject = new ReplaySubject<string>(1);
   useridSubject$ = this.useridSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private productService: ProductService) {
     this.slackData = new SlackData();
   }
 
@@ -30,12 +31,16 @@ export class SlackService {
           this._token = data.access_token;
           this._username = data.user.name;
           this._userid = data.user.id;
-          this.useridSubject.next(this._userid);
+          this.productService.initMySupplies().subscribe(suppliesReturns => {
+            if(suppliesReturns)
+              this.useridSubject.next(this._userid);
+          });
           obs.next(this._username);
+          obs.complete();
         } else {
           obs.error(data.error);
+          obs.complete();
         }
-        obs.complete();
       }, err => console.log(err));
     });
   }
