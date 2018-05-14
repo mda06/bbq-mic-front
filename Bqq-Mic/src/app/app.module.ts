@@ -3,16 +3,23 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { ProductLineComponent } from './product-line/product-line.component';
+import { ProductCategoryComponent } from './product-category/product-category.component';
+import { ProductService } from "./service/product.service";
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    ProductLineComponent,
+    ProductCategoryComponent
   ],
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
