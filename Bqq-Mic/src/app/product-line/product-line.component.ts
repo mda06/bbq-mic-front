@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Product} from "../model/product";
 import {ProductService} from "../service/product.service";
+import {Supply} from "../model/supply";
 
 @Component({
   selector: 'bbq-product-line',
@@ -15,12 +16,14 @@ export class ProductLineComponent implements OnInit {
   currentQuantity: number = 0;
   canAddSupply: boolean = true;
   isSupplied: boolean = false;
+  supply: Supply = null;
+  slackId: string = "";
 
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.withQuantity = this.product.quantity !== 0;
-    this.currentQuantity = this.product.quantity / 2;
+    this.currentQuantity = Math.floor(this.product.quantity / 2);
     this.initCurrentQuantity();
     setInterval(() => this.initCurrentQuantity(), 5000);
   }
@@ -31,18 +34,30 @@ export class ProductLineComponent implements OnInit {
     }, err => console.log(err));
   }
 
-  onCheckboxClicked($event) {
+  onCheckboxClicked() {
     this.isSupplied = !this.isSupplied;
     if(this.isSupplied) {
-      console.log("Add the supply with ", this.currentQuantity,  " for ", this.product.name);
+      this.productService.addSupply(this.slackId, this.product.id, this.withQuantity ? this.currentQuantity : 0).subscribe(
+        data => this.supply = data,
+        err => console.log(err)
+      );
     } else {
-      console.log("Delete the supply");
+      this.productService.deleteSupply(this.supply).subscribe(
+        data => {
+          if (data)
+            this.supply = null;
+        }, err => console.log(err)
+      );
     }
   }
 
   onBlurQuantity() {
     if(this.isSupplied) {
-      console.log("Update the supply with: ", this.currentQuantity);
+      this.supply.quantity = this.currentQuantity;
+      this.productService.updateSupply(this.supply).subscribe(
+        data => this.supply = data,
+          err => console.log(err)
+      );
     }
   }
 }
