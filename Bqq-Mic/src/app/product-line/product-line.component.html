@@ -1,6 +1,32 @@
-<div *ngIf="product">
-  <p>{{ '0/' + product.quantity + ' ' + product.unit }} {{ product.name }}</p>
-</div>
+<form *ngIf="product">
+  <div *ngIf="!withQuantity">
+    <div class="form-check col-md-3">
+      <input type="checkbox" class="form-check-input" [ngModel]="isSupplied" [readonly]="!canAddSupply"
+             id="{{ 'isSuppliedWithoutId-' + product.id }}" name="isSuppliedWithoutQuantity" (ngModelChange)="onCheckboxClicked($event)">
+      <label class="form-check-label" for="{{ 'isSuppliedWithoutId-' + product.id }}">{{ product.name }}</label>
+    </div>
+  </div>
+  <div *ngIf=" withQuantity" class="form-row">
+    <div class="col-md-5">
+      <label>{{ totalQuantity + '/' + product.quantity + ' ' + product.unit }} {{ product.name }}</label>
+    </div>
+
+    <div class="input-group col-md-4" >
+      <input type="number" class="form-control quantity" placeholder="100" [readonly]="!canAddSupply"
+             [(ngModel)]="currentQuantity" (blur)="onBlurQuantity()" name="currentQuantity">
+      <span class="input-group-addon unit" id="suffix">{{ product.unit }}</span>
+    </div>
+
+    <div class="form-check col-md-3">
+      <input type="checkbox" class="form-check-input isSupplied" [readonly]="!canAddSupply"
+             [ngModel]="isSupplied" id="{{ 'isSupplied-' + product.id }}" name="isSupplied" (ngModelChange)="onCheckboxClicked($event)">
+      <label class="form-check-label" for="{{ 'isSupplied-' + product.id }}">Supply</label>
+    </div>
+  </div>
+</form>
+
+
+
 <div *ngIf="!product">
   No product selected
 </div>

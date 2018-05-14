@@ -1,0 +1,8 @@
+span.unit {
+  /*margin-left: -12px;*/
+  color: lightslategray;
+}
+
+.isSupplied {
+  margin-left: 0 !important;
+}

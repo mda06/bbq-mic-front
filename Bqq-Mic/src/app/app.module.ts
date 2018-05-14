@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { ProductLineComponent } from './product-line/product-line.component';
 import { ProductCategoryComponent } from './product-category/product-category.component';
 import { ProductService } from "./service/product.service";
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { ProductService } from "./service/product.service";
     ProductCategoryComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
