@@ -9,16 +9,17 @@ import {ProductService} from "../service/product.service";
 })
 export class ProductLineComponent implements OnInit {
 
-  @Input() withQuantity: boolean = true;
+  @Input() withQuantity: boolean;
   @Input() product: Product;
   totalQuantity: number = 0;
   currentQuantity: number = 0;
-  canAddSupply: boolean = false;
+  canAddSupply: boolean = true;
   isSupplied: boolean = false;
 
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
+    this.withQuantity = this.product.quantity !== 0;
     this.currentQuantity = this.product.quantity / 2;
     this.initCurrentQuantity();
     setInterval(() => this.initCurrentQuantity(), 5000);
