@@ -1,3 +1,16 @@
-<p>
-  home works!
-</p>
+<div id="home" class="container-fluid">
+  <header class="row">
+    BBQ Maker =D
+  </header>
+  <section class="row border-between">
+    <bbq-product-category [products]="meats" category="Viandes" class="col-md-4 col-sm-6 category"></bbq-product-category>
+    <bbq-product-category [products]="vegetables" category="Légumes" class="col-md-4 col-sm-6 category"></bbq-product-category>
+    <bbq-product-category [products]="drinks" category="Boissons" class="col-md-4 col-sm-6 category"></bbq-product-category>
+    <bbq-product-category [products]="snacks" category="Snacks" class="col-md-4 col-sm-6 category"></bbq-product-category>
+    <bbq-product-category [products]="sauces" category="Sauces" class="col-md-4 col-sm-6 category"></bbq-product-category>
+    <bbq-product-category [products]="utils" category="Outils" class="col-md-4 col-sm-6 category"></bbq-product-category>
+  </section>
+  <footer class="row">
+    <p>Maded by the MIC trainees</p>
+  </footer>
+</div>

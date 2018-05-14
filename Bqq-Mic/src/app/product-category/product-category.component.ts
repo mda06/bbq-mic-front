@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Product} from "../model/product";
+import {ProductService} from "../service/product.service";
 
 @Component({
   selector: 'bbq-product-category',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductCategoryComponent implements OnInit {
 
-  constructor() { }
+  @Input() category: string;
+  @Input() products: Array<Product> = [];
+
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
+    
   }
 
 }

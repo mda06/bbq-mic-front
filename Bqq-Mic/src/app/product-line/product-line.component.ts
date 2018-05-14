@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Product} from "../model/product";
 
 @Component({
   selector: 'bbq-product-line',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-line.component.css']
 })
 export class ProductLineComponent implements OnInit {
+
+  @Input() product: Product;
 
   constructor() { }
 

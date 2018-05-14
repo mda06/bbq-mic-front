@@ -1,0 +1,28 @@
+#home {
+}
+
+header {
+  min-height: 5vh;
+}
+
+section {
+  min-height: 88vh;
+}
+
+footer {
+  min-height: 5vh;
+}
+
+.border-between > [class*='col-']:before {
+  background: #e3e3e3;
+  bottom: 0;
+  content: " ";
+  left: 0;
+  position: absolute;
+  width: 1px;
+  top: 35px;
+}
+
+.border-between > [class*='col-']:first-child:before {
+  display: none;
+}
