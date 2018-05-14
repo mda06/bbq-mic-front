@@ -1,7 +1,7 @@
 <form *ngIf="product">
   <div *ngIf="!withQuantity">
     <div class="form-check col-md-3">
-      <input type="checkbox" class="form-check-input" [ngModel]="isSupplied" [readonly]="!canAddSupply"
+      <input type="checkbox" class="form-check-input" [ngModel]="isSupplied" [disabled]="!canAddSupply"
              id="{{ 'isSuppliedWithoutId-' + product.id }}" name="isSuppliedWithoutQuantity" (ngModelChange)="onCheckboxClicked($event)">
       <label class="form-check-label" for="{{ 'isSuppliedWithoutId-' + product.id }}">{{ product.name }}</label>
     </div>
@@ -18,7 +18,7 @@
     </div>
 
     <div class="form-check col-md-3">
-      <input type="checkbox" class="form-check-input isSupplied" [readonly]="!canAddSupply"
+      <input type="checkbox" class="form-check-input isSupplied" [disabled]="!canAddSupply"
              [ngModel]="isSupplied" id="{{ 'isSupplied-' + product.id }}" name="isSupplied" (ngModelChange)="onCheckboxClicked($event)">
       <label class="form-check-label" for="{{ 'isSupplied-' + product.id }}">Supply</label>
     </div>

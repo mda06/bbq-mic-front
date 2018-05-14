@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Product} from "../model/product";
 import {ProductService} from "../service/product.service";
 import {Supply} from "../model/supply";
+import {SlackService} from "../service/slack.service";
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'bbq-product-line',
@@ -19,9 +21,14 @@ export class ProductLineComponent implements OnInit {
   supply: Supply = null;
   slackId: string = "";
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,
+              private slackService: SlackService) { }
 
   ngOnInit() {
+    this.slackService.getSlackId().subscribe(id => {
+      this.slackId = id;
+      this.canAddSupply = !isNullOrUndefined(id);
+    });
     this.withQuantity = this.product.quantity !== 0;
     this.currentQuantity = Math.floor(this.product.quantity / 2);
     this.initCurrentQuantity();
@@ -36,7 +43,7 @@ export class ProductLineComponent implements OnInit {
 
   onCheckboxClicked() {
     this.isSupplied = !this.isSupplied;
-    if(this.isSupplied) {
+    if(this.isSupplied && this.canAddSupply) {
       this.productService.addSupply(this.slackId, this.product.id, this.withQuantity ? this.currentQuantity : 0).subscribe(
         data => this.supply = data,
         err => console.log(err)
@@ -52,7 +59,7 @@ export class ProductLineComponent implements OnInit {
   }
 
   onBlurQuantity() {
-    if(this.isSupplied) {
+    if(this.isSupplied && this.canAddSupply) {
       this.supply.quantity = this.currentQuantity;
       this.productService.updateSupply(this.supply).subscribe(
         data => this.supply = data,

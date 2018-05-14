@@ -9,6 +9,7 @@ import { ProductCategoryComponent } from './product-category/product-category.co
 import { ProductService } from "./service/product.service";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {SlackService} from "./service/slack.service";
 
 
 @NgModule({
@@ -23,7 +24,10 @@ import {HttpClientModule} from "@angular/common/http";
     FormsModule,
     HttpClientModule,
   ],
-  providers: [ProductService],
+  providers: [
+    ProductService,
+    SlackService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
