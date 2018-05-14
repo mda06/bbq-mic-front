@@ -22,6 +22,7 @@ export class SlackService {
 
   init(code: string): Observable<string> {
     this._slackCode = code;
+    console.log("Init for ", code);
     return Observable.create(obs => {
       this.http.get<any>("https://slack.com/api/oauth.access?code=" + this._slackCode
         + "&client_id=" + this.slackData.clientId
@@ -31,7 +32,8 @@ export class SlackService {
           this._token = data.access_token;
           this._username = data.user.name;
           this._userid = data.user.id;
-          this.productService.initMySupplies().subscribe(suppliesReturns => {
+          console.log(this._userid);
+          this.productService.initMySupplies(this._userid).subscribe(suppliesReturns => {
             if(suppliesReturns)
               this.useridSubject.next(this._userid);
           });

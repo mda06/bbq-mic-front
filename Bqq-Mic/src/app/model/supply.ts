@@ -2,14 +2,14 @@ import {Product} from "./product";
 
 export class Supply {
   constructor(id: number = 0, slackId: string = "", quantity: number = 0, product: Product = null) {
-    this.id = id;
-    this.slackId = slackId;
-    this.quantity = quantity;
-    this.product = product;
+    this.Id = id;
+    this.SlackId = slackId;
+    this.Quantity = quantity;
+    this.Product = product;
   }
 
-  id: number;
-  slackId: string;
-  product: Product;
-  quantity: number;
+  Id: number;
+  SlackId: string;
+  Product: Product;
+  Quantity: number;
 }

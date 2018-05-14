@@ -29,10 +29,9 @@ export class ProductLineComponent implements OnInit {
       console.log(id);
       this.slackId = id;
       this.canAddSupply = !isNullOrUndefined(id);
-      this.productService.initMySupplies().subscribe();
       this.supply = this.productService.getSupply(this.slackId, this.product.Id);
       if(!isNullOrUndefined(this.supply)) {
-        this.currentQuantity = this.supply.quantity;
+        this.currentQuantity = this.supply.Quantity;
         this.isSupplied = true;
       }
     }, err => console.log(err));
@@ -66,10 +65,12 @@ export class ProductLineComponent implements OnInit {
 
   onBlurQuantity() {
     if(this.isSupplied && this.canAddSupply) {
-      this.supply.quantity = this.currentQuantity;
+      this.supply.Quantity = this.currentQuantity;
       this.productService.updateSupply(this.supply).subscribe(
-        data => this.supply = data,
-          err => console.log(err)
+        data => {
+          this.supply = data;
+          this.totalQuantity += this.supply.Quantity;
+          },err => console.log(err)
       );
     }
   }

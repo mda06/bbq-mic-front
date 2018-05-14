@@ -9,17 +9,13 @@ export class ProductService {
 
   private baseUrl = "http://mic-bbq.azurewebsites.net";
   private getProductsUrl = "/api/Products";
-  private getProductQtUrl = "/api/totalQt";
+  private getProductQtUrl = "/api/TotalQuantity";
   private deleteSupplyUrl = "/api/supplies";
   private addSupplyUrl = "/api/supplies";
   private updateSupplyUrl = "/api/supplies";
   private getSuppliesUrl = "/api/supplies";
 
-  private mySupplies: Array<Supply> = [
-    new Supply(1, "U8VD1SZ89", 20, new Product(8)),
-    new Supply(2, "U8VD1SZ89", 2, new Product(1)),
-    new Supply(3, "U8VD1SZ89", 3, new Product(5))
-  ];
+  private mySupplies: Array<Supply> = [];
 
   constructor(private http: HttpClient) {
   }
@@ -29,52 +25,37 @@ export class ProductService {
   }
 
   getProductCurrentQuantity(product: Product): Observable<number> {
-    //return this.http.get<number>(this.baseUrl + this.getProductQtUrl);
-    return Observable.create(obs => {
-      obs.next(Math.floor(Math.random() * product.Quantity));
-      obs.complete();
-    });
+    return this.http.get<number>(this.baseUrl + this.getProductQtUrl + "/" + product.Id);
   }
 
-  initMySupplies(): Observable<boolean> {
+  initMySupplies(slackId: string): Observable<boolean> {
+    console.log("Initing for ", slackId);
     return Observable.create(obs => {
-      /*this.http.get<Array<Supply>>(this.baseUrl + this.getSuppliesUrl).subscribe(data => {
+      this.http.get<Array<Supply>>(this.baseUrl + this.getSuppliesUrl + "?SlackId=" + slackId).subscribe(data => {
         this.mySupplies = data;
+        console.log(this.mySupplies);
         obs.next(true);
         obs.complete();
-      }, err => console.log(err));*/
-
-      obs.next(true);
-      obs.complete();
+      }, err => console.log(err));
     });
   }
 
   getSupply(slackId: string, productId: number): Supply {
-    return this.mySupplies.find(supply => supply.slackId === slackId && supply.product.Id === productId);
+    return this.mySupplies.find(supply => supply.SlackId === slackId && supply.Product.Id === productId);
   }
 
   addSupply(slackId: string, productId: number, quantity: number): Observable<Supply> {
-    //return this.http.post<Supply>(this.addSupplyUrl, {slackId: slackId, productId: productId, Quantity: Quantity});
-    return Observable.create(obs => {
-      obs.next(new Supply(Math.floor(Math.random() * 1000), slackId, quantity, new Product(productId)));
-      obs.complete();
-    });
+    return this.http.post<Supply>(this.baseUrl + this.addSupplyUrl, {slackId: slackId, productId: productId, Quantity: quantity});
   }
 
   updateSupply(supply: Supply): Observable<Supply> {
-    //return this.http.put<Supply>(this.updateSupplyUrl, supply);
-    return Observable.create(obs => {
-      obs.next(new Supply(Math.floor(Math.random() * 1000), supply.slackId, supply.quantity, supply.product));
-      obs.complete();
-    });
+    return this.http.put<Supply>(this.baseUrl + this.updateSupplyUrl,
+      {slackId: supply.SlackId, productId: supply.Product.Id, Quantity: supply.Quantity});
   }
 
   deleteSupply(supply: Supply): Observable<boolean> {
-    //return this.http.delete<boolean>(this.deleteSupplyUrl + "/" + supply.Id);
-    return Observable.create(obs => {
-      obs.next(true);
-      obs.complete();
-    });
+    //don't work !
+    return this.http.delete<boolean>(this.baseUrl + this.deleteSupplyUrl + "/" + supply.Id);
   }
 
 }
