@@ -30,7 +30,7 @@ export class ProductLineComponent implements OnInit {
       console.log(id);
       this.canAddSupply = !isNullOrUndefined(id);
     }, err => console.log(err));
-    this.withQuantity = this.product.quantity !== 0;
+    this.withQuantity = this.product.quantity > 0;
     this.currentQuantity = Math.floor(this.product.quantity / 2);
     this.initCurrentQuantity();
     setInterval(() => this.initCurrentQuantity(), 5000);
