@@ -10,6 +10,7 @@ import { ProductService } from "./service/product.service";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {SlackService} from "./service/slack.service";
+import {AppRoutingModule} from "./app-routing.module";
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {SlackService} from "./service/slack.service";
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
     ProductService,
