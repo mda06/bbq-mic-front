@@ -1,15 +1,15 @@
 export class Product {
   constructor(id: number = 0, name: string = "", category: string = "", quantity: number = 0, unit: string = "") {
-    this.id = id;
-    this.name = name;
-    this.category = category;
-    this.quantity = quantity;
-    this.unit = unit;
+    this.Id = id;
+    this.Name = name;
+    this.Category = category;
+    this.Quantity = quantity;
+    this.Unit = unit;
   }
 
-  id: number = 0;
-  name: string = "";
-  category: string = "";
-  quantity: number = 0;
-  unit : string = "";
+  Id: number = 0;
+  Name: string = "";
+  Category: string = "";
+  Quantity: number = 0;
+  Unit : string = "";
 }

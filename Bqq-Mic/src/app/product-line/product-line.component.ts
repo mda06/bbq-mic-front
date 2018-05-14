@@ -30,13 +30,13 @@ export class ProductLineComponent implements OnInit {
       this.slackId = id;
       this.canAddSupply = !isNullOrUndefined(id);
       this.productService.initMySupplies().subscribe();
-      this.supply = this.productService.getSupply(this.slackId, this.product.id);
+      this.supply = this.productService.getSupply(this.slackId, this.product.Id);
       if(!isNullOrUndefined(this.supply)) {
         this.currentQuantity = this.supply.quantity;
         this.isSupplied = true;
       }
     }, err => console.log(err));
-    this.withQuantity = this.product.quantity > 0;
+    this.withQuantity = this.product.Quantity > 0;
     this.initTotalQuantity();
     setInterval(() => this.initTotalQuantity(), 5000);
   }
@@ -50,7 +50,7 @@ export class ProductLineComponent implements OnInit {
   onCheckboxClicked() {
     this.isSupplied = !this.isSupplied;
     if(this.isSupplied && this.canAddSupply) {
-      this.productService.addSupply(this.slackId, this.product.id, this.withQuantity ? this.currentQuantity : 0).subscribe(
+      this.productService.addSupply(this.slackId, this.product.Id, this.withQuantity ? this.currentQuantity : 0).subscribe(
         data => this.supply = data,
         err => console.log(err)
       );
