@@ -7,6 +7,7 @@ import {ProductService} from "./product.service";
 
 @Injectable()
 export class SlackService {
+
   private _token: string = null;
   private _username: string = null;
   private _userid: string = null;
@@ -15,6 +16,8 @@ export class SlackService {
 
   private useridSubject = new ReplaySubject<string>(1);
   useridSubject$ = this.useridSubject.asObservable();
+  private mySuppliedInitialized = new ReplaySubject<boolean>(1);
+  mySuppliedInitialized$ = this.mySuppliedInitialized.asObservable();
 
   constructor(private http: HttpClient, private productService: ProductService) {
     this.slackData = new SlackData();
@@ -33,9 +36,10 @@ export class SlackService {
           this._username = data.user.name;
           this._userid = data.user.id;
           console.log(this._userid);
+          this.useridSubject.next(this._userid);
           this.productService.initMySupplies(this._userid).subscribe(suppliesReturns => {
             if(suppliesReturns)
-              this.useridSubject.next(this._userid);
+              this.mySuppliedInitialized.next(true);
           });
           obs.next(this._username);
           obs.complete();

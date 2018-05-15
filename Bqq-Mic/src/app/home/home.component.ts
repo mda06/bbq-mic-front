@@ -36,12 +36,12 @@ export class HomeComponent implements OnInit {
     });
 
     this.productService.getProducts().subscribe(data => {
-      this.meats = data.filter(p => p.Category === 'Viandes');
-      this.drinks = data.filter(p => p.Category === 'Boissons');
-      this.snacks = data.filter(p => p.Category === 'Sides');
-      this.utils = data.filter(p => p.Category === 'Outils');
-      this.vegetables = data.filter(p => p.Category === 'Légumes');
-      this.sauces = data.filter(p => p.Category === 'Sauces');
+      this.meats = data.filter(p => p.Category === 'Viandes').sort((a, b) => a.Quantity - b.Quantity);
+      this.drinks = data.filter(p => p.Category === 'Boissons').sort((a, b) => a.Quantity - b.Quantity);
+      this.snacks = data.filter(p => p.Category === 'Sides').sort((a, b) => a.Quantity - b.Quantity);
+      this.utils = data.filter(p => p.Category === 'Outils').sort((a, b) => a.Quantity - b.Quantity);
+      this.vegetables = data.filter(p => p.Category === 'Légumes').sort((a, b) => a.Quantity - b.Quantity);
+      this.sauces = data.filter(p => p.Category === 'Sauces').sort((a, b) => a.Quantity - b.Quantity);
     }, err => console.log(err));
   }
 

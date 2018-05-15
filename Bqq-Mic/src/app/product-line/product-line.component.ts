@@ -20,15 +20,18 @@ export class ProductLineComponent implements OnInit {
   isSupplied: boolean = false;
   supply: Supply = null;
   slackId: string = "";
+  isSupplyInitialized: boolean = false;
 
   constructor(private productService: ProductService,
               private slackService: SlackService) { }
 
   ngOnInit() {
     this.slackService.useridSubject$.subscribe(id => {
-      console.log(id);
       this.slackId = id;
       this.canAddSupply = !isNullOrUndefined(id);
+    }, err => console.log(err));
+    this.slackService.mySuppliedInitialized$.subscribe(_ => {
+      this.isSupplyInitialized = true;
       this.supply = this.productService.getSupply(this.slackId, this.product.Id);
       if(!isNullOrUndefined(this.supply)) {
         this.currentQuantity = this.supply.Quantity;
