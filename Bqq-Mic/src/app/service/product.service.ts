@@ -29,11 +29,9 @@ export class ProductService {
   }
 
   initMySupplies(slackId: string): Observable<boolean> {
-    console.log("Initing for ", slackId);
     return Observable.create(obs => {
       this.http.get<Array<Supply>>(this.baseUrl + this.getSuppliesUrl + "?SlackId=" + slackId).subscribe(data => {
         this.mySupplies = data;
-        console.log(this.mySupplies);
         obs.next(true);
         obs.complete();
       }, err => console.log(err));
@@ -53,9 +51,9 @@ export class ProductService {
       {slackId: supply.SlackId, productId: supply.Product.Id, Quantity: supply.Quantity});
   }
 
-  deleteSupply(supply: Supply): Observable<boolean> {
+  deleteSupply(slackId: string, supply: Supply): Observable<boolean> {
     //don't work !
-    return this.http.delete<boolean>(this.baseUrl + this.deleteSupplyUrl + "/" + supply.Id);
+    return this.http.delete<boolean>(this.baseUrl + this.deleteSupplyUrl + "?SlackId=" + slackId + "&ProductId=" + supply.Product.Id);
   }
 
 }

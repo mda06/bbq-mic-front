@@ -53,12 +53,16 @@ export class ProductLineComponent implements OnInit {
     this.isSupplied = !this.isSupplied;
     if(this.isSupplied && this.canAddSupply) {
       this.productService.addSupply(this.slackId, this.product.Id, this.withQuantity ? this.currentQuantity : 0).subscribe(
-        data => this.supply = data,
+        data => {
+          this.supply = data;
+          this.totalQuantity += this.supply.Quantity;
+        },
         err => console.log(err)
       );
     } else {
-      this.productService.deleteSupply(this.supply).subscribe(
+      this.productService.deleteSupply(this.slackId, this.supply).subscribe(
         data => {
+          this.totalQuantity -= this.supply.Quantity;
           if (data)
             this.supply = null;
         }, err => console.log(err)
@@ -73,6 +77,7 @@ export class ProductLineComponent implements OnInit {
         data => {
           this.supply = data;
           this.totalQuantity += this.supply.Quantity;
+          console.log(this.totalQuantity);
           },err => console.log(err)
       );
     }
