@@ -3,6 +3,9 @@
 
 header {
   min-height: 5vh;
+  color: white;
+  background: lightslategray;
+  margin-bottom: 1em;
 }
 
 section {
@@ -13,6 +16,10 @@ footer {
   min-height: 5vh;
 }
 
+.category {
+  margin-bottom: 40px;
+}
+
 .border-between > [class*='col-']:before {
   background: #e3e3e3;
   bottom: 0;
@@ -20,7 +27,7 @@ footer {
   left: 0;
   position: absolute;
   width: 1px;
-  top: 35px;
+  top: 50px;
 }
 
 .border-between > [class*='col-']:first-child:before {

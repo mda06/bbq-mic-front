@@ -1,6 +1,6 @@
 <form *ngIf="product">
   <div *ngIf="!withQuantity">
-    <div class="form-check col-md-12">
+    <div class="form-check col-md-12 pl-5">
       <input *ngIf="canAddSupply && isSupplyInitialized || !canAddSupply" type="checkbox" class="form-check-input"
              [ngModel]="isSupplied" [disabled]="!canAddSupply"
              id="{{ 'isSuppliedWithoutId-' + product.Id }}" name="isSuppliedWithoutQuantity" (ngModelChange)="onCheckboxClicked($event)">
@@ -9,10 +9,10 @@
     </div>
   </div>
   <div *ngIf=" withQuantity" class="form-row">
-    <div class="col-md-5">
-      <label>{{ totalQuantity + '/' + product.Quantity + ' ' + product.Unit }} {{ product.Name + '(' + slackIds.length + ')' }}</label>
+    <div class="col-md-6">
+      <label class="pl-4">{{ totalQuantity + '/' + product.Quantity + ' ' + product.Unit }} {{ product.Name + '(' + slackIds.length + ')' }}</label>
     </div>
-    <div *ngIf="canAddSupply && !isSupplyInitialized" class="input-group col-md-7">
+    <div *ngIf="canAddSupply && !isSupplyInitialized" class="input-group col-md-6">
       <i class="fa fa-spinner rotate"></i>
     </div>
 
@@ -22,7 +22,7 @@
       <span class="input-group-addon unit" id="suffix">{{ product.Unit }}</span>
     </div>
 
-    <div *ngIf="canAddSupply && isSupplyInitialized || !canAddSupply" class="form-check col-md-3">
+    <div *ngIf="canAddSupply && isSupplyInitialized || !canAddSupply" class="form-check col-md-2">
       <input type="checkbox" class="form-check-input isSupplied" [disabled]="!canAddSupply"
              [ngModel]="isSupplied" id="{{ 'isSupplied-' + product.Id }}" name="isSupplied" (ngModelChange)="onCheckboxClicked($event)">
       <label class="form-check-label" for="{{ 'isSupplied-' + product.Id }}">Supply</label>

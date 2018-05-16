@@ -46,7 +46,7 @@ export class ProductService {
   }
 
   getSlackIds(productId: number): Observable<Array<string>> {
-    return this.http.get<Array<string>>(this.baseUrl + this.slackIdsUrl + "?productId=" + productId);
+    return this.http.get<Array<string>>(this.baseUrl + this.slackIdsUrl + "/" + productId);
   }
 
   addSupply(slackId: string, productId: number, quantity: number): Observable<Supply> {
