@@ -7,7 +7,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 @Injectable()
 export class ProductService {
 
-  private baseUrl = "http://mic-bbq.azurewebsites.net";
+  private baseUrl = "https://mic-bbq.azurewebsites.net";
   private getProductsUrl = "/api/Products";
   private slackIdsUrl = "/api/Products/GetSlackIds";
   private getProductQtUrl = "/api/TotalQuantity";

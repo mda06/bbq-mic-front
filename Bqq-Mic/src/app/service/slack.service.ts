@@ -30,7 +30,7 @@ export class SlackService {
       this.http.get<any>("https://slack.com/api/oauth.access?code=" + this._slackCode
         + "&client_id=" + this.slackData.clientId
         + "&client_secret=" + this.slackData.clientSecret
-        + "&redirect_uri=http://localhost:4200/home").subscribe(data => {
+        + "&redirect_uri=https://mic-bqq.azurewebsites.net/home").subscribe(data => {
         if (data.ok === true) {
           this._token = data.access_token;
           this._username = data.user.name;
