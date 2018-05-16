@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Product} from "../model/product";
 import {Supply} from "../model/supply";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {RequestOptions} from "http";
+import {RequestMethod, RequestOptionsArgs} from "@angular/http";
 
 @Injectable()
 export class ProductService {
@@ -52,8 +54,12 @@ export class ProductService {
   }
 
   deleteSupply(slackId: string, supply: Supply): Observable<boolean> {
-    //don't work !
-    return this.http.delete<boolean>(this.baseUrl + this.deleteSupplyUrl + "?SlackId=" + slackId + "&ProductId=" + supply.Product.Id);
+    return this.http.request<boolean>('DELETE', this.baseUrl + this.deleteSupplyUrl, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: { SlackId: slackId, ProductId: supply.Product.Id }
+    });
   }
 
 }
