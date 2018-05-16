@@ -56,7 +56,7 @@ export class ProductLineComponent implements OnInit {
   onCheckboxClicked() {
     this.isSupplied = !this.isSupplied;
     if(this.isSupplied && this.canAddSupply) {
-      this.productService.addSupply(this.slackId, this.product.Id, this.withQuantity ? this.currentQuantity : 0).subscribe(
+      this.productService.addSupply(this.slackId, this.product.Id, this.withQuantity ? this.getCurrentQuantity() : 0).subscribe(
         data => {
           this.supply = data;
           this.initTotalQuantity();
@@ -76,7 +76,7 @@ export class ProductLineComponent implements OnInit {
 
   onBlurQuantity() {
     if(this.isSupplied && this.canAddSupply) {
-      this.supply.Quantity = this.currentQuantity;
+      this.supply.Quantity = this.getCurrentQuantity();
       this.productService.updateSupply(this.supply).subscribe(
         data => {
           this.supply = data;
@@ -84,5 +84,12 @@ export class ProductLineComponent implements OnInit {
           },err => console.log(err)
       );
     }
+  }
+
+  getCurrentQuantity(): number {
+    if(this.currentQuantity < 0) this.currentQuantity = 0;
+    else if(this.currentQuantity > 250) this.currentQuantity = 250;
+
+    return this.currentQuantity;
   }
 }

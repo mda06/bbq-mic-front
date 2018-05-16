@@ -18,6 +18,7 @@
 
     <div *ngIf="canAddSupply && isSupplyInitialized || !canAddSupply" class="input-group col-md-4" >
       <input type="number" class="form-control quantity" placeholder="100" [readonly]="!canAddSupply"
+             min="0" max="250"
              [(ngModel)]="currentQuantity" (blur)="onBlurQuantity()" name="currentQuantity">
       <span class="input-group-addon unit" id="suffix">{{ product.Unit }}</span>
     </div>
