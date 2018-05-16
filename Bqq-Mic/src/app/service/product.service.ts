@@ -3,8 +3,6 @@ import {Observable} from "rxjs/Observable";
 import {Product} from "../model/product";
 import {Supply} from "../model/supply";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {RequestOptions} from "http";
-import {RequestMethod, RequestOptionsArgs} from "@angular/http";
 
 @Injectable()
 export class ProductService {
