@@ -11,6 +11,7 @@ export class ProductService {
 
   private baseUrl = "http://mic-bbq.azurewebsites.net";
   private getProductsUrl = "/api/Products";
+  private slackIdsUrl = "/api/Products/GetSlackIds";
   private getProductQtUrl = "/api/TotalQuantity";
   private deleteSupplyUrl = "/api/supplies";
   private addSupplyUrl = "/api/supplies";
@@ -42,6 +43,10 @@ export class ProductService {
 
   getSupply(slackId: string, productId: number): Supply {
     return this.mySupplies.find(supply => supply.SlackId === slackId && supply.Product.Id === productId);
+  }
+
+  getSlackIds(productId: number): Observable<Array<string>> {
+    return this.http.get<Array<string>>(this.baseUrl + this.slackIdsUrl + "?productId=" + productId);
   }
 
   addSupply(slackId: string, productId: number, quantity: number): Observable<Supply> {

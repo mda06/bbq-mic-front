@@ -20,6 +20,7 @@ export class ProductLineComponent implements OnInit {
   isSupplied: boolean = false;
   supply: Supply = null;
   slackId: string = "";
+  slackIds: Array<string> = [];
   isSupplyInitialized: boolean = false;
 
   constructor(private productService: ProductService,
@@ -40,12 +41,15 @@ export class ProductLineComponent implements OnInit {
     }, err => console.log(err));
     this.withQuantity = this.product.Quantity > 0;
     this.initTotalQuantity();
-    setInterval(() => this.initTotalQuantity(), 5000);
+    setInterval(() => this.initTotalQuantity(), 10000);
   }
 
   private initTotalQuantity() {
     this.productService.getProductCurrentQuantity(this.product).subscribe(data => {
       this.totalQuantity = data;
+    }, err => console.log(err));
+    this.productService.getSlackIds(this.product.Id).subscribe(data => {
+      this.slackIds = data;
     }, err => console.log(err));
   }
 
@@ -55,14 +59,14 @@ export class ProductLineComponent implements OnInit {
       this.productService.addSupply(this.slackId, this.product.Id, this.withQuantity ? this.currentQuantity : 0).subscribe(
         data => {
           this.supply = data;
-          this.totalQuantity += this.supply.Quantity;
+          this.initTotalQuantity();
         },
         err => console.log(err)
       );
     } else {
       this.productService.deleteSupply(this.slackId, this.supply).subscribe(
         data => {
-          this.totalQuantity -= this.supply.Quantity;
+          this.initTotalQuantity();
           if (data)
             this.supply = null;
         }, err => console.log(err)
@@ -76,8 +80,7 @@ export class ProductLineComponent implements OnInit {
       this.productService.updateSupply(this.supply).subscribe(
         data => {
           this.supply = data;
-          this.totalQuantity += this.supply.Quantity;
-          console.log(this.totalQuantity);
+          this.initTotalQuantity();
           },err => console.log(err)
       );
     }
