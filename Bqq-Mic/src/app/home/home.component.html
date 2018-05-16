@@ -1,7 +1,9 @@
 <div id="home" class="container-fluid">
   <header class="row d-flex justify-content-between align-items-center p-1">
     <img src="../../assets/MICGrill.svg" alt="logo" height="80px">
-    <a *ngIf="!username" href="https://slack.com/oauth/authorize?scope=identity.basic&client_id={{ slackService.clientId }}&redirect_uri={{ slackService.redirectUri }}"><img src="https://api.slack.com/img/sign_in_with_slack.png" /></a>
+    <a *ngIf="!username" href="https://slack.com/oauth/authorize?scope=identity.basic&client_id={{ slackService.clientId }}&redirect_uri={{ slackService.redirectUri }}">
+      <img src="https://api.slack.com/img/sign_in_with_slack.png" />
+    </a>
     <h5 *ngIf="username">
       {{ username }}
     </h5>
@@ -14,7 +16,7 @@
     <bbq-product-category [products]="sauces" category="Sauces" class="col-md-4 col-sm-6 category"></bbq-product-category>
     <bbq-product-category [products]="utils" category="Outils" class="col-md-4 col-sm-6 category"></bbq-product-category>
   </section>
-  <footer class="row">
+  <footer class="row pl-3">
     <p>Maded by the MIC trainees</p>
   </footer>
 </div>

@@ -8,6 +8,10 @@ header {
   margin-bottom: 1em;
 }
 
+header > a, h5 {
+  padding-right: 0.7em;
+}
+
 section {
   min-height: 88vh;
 }
