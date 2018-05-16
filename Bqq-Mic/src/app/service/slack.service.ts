@@ -12,6 +12,8 @@ export class SlackService {
   private _username: string = null;
   private _userid: string = null;
   private _slackCode: string = null;
+  //private _redirectUri: string = "https://mic-bqq.azurewebsites.net";
+  private _redirectUri: string = "http://localhost:4200/";
   private slackData: SlackData = null;
 
   private useridSubject = new ReplaySubject<string>(1);
@@ -30,7 +32,7 @@ export class SlackService {
       this.http.get<any>("https://slack.com/api/oauth.access?code=" + this._slackCode
         + "&client_id=" + this.slackData.clientId
         + "&client_secret=" + this.slackData.clientSecret
-        + "&redirect_uri=https://mic-bqq.azurewebsites.net/home").subscribe(data => {
+        + "&redirect_uri=" + this._redirectUri).subscribe(data => {
         if (data.ok === true) {
           this._token = data.access_token;
           this._username = data.user.name;
@@ -57,6 +59,10 @@ export class SlackService {
 
   get clientId() {
     return this.slackData.clientId;
+  }
+
+  get redirectUri() {
+    return this._redirectUri;
   }
 
 }

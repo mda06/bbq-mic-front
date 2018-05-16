@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
+      console.log(params);
       let code = params['code'];
       if(!isNullOrUndefined(code)) {
         this.slackService.init(code).subscribe(data => {
