@@ -12,8 +12,8 @@ export class SlackService {
   private _username: string = null;
   private _userid: string = null;
   private _slackCode: string = null;
-  //private _redirectUri: string = "https://mic-bqq.azurewebsites.net";
-  private _redirectUri: string = "http://localhost:4200/";
+  private _redirectUri: string = "https://mic-bqq.azurewebsites.net";
+  //private _redirectUri: string = "http://localhost:4200/";
   private slackData: SlackData = null;
 
   private useridSubject = new ReplaySubject<string>(1);
